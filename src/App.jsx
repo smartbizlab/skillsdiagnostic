@@ -16,9 +16,16 @@ const ACCENT     = [C.teal, C.violet, C.amber];
 const ACCENT_RGB = ["43,212,184","167,139,250","245,158,11"];
 const font       = "'Plus Jakarta Sans',sans-serif";
 
-const GHL_FORM_ID  = "E0DGPlNKwF71BjKkElAU";
-const GHL_FORM_URL = `https://link.centralize.es/widget/form/${GHL_FORM_ID}`;
-const GHL_JS_URL   = "https://link.centralize.es/js/form_embed.js";
+const GHL_FORM_ID   = "E0DGPlNKwF71BjKkElAU";
+const GHL_FORM_BASE = `https://link.centralize.es/widget/form/${GHL_FORM_ID}`;
+const GHL_JS_URL    = "https://link.centralize.es/js/form_embed.js";
+
+function buildGHLUrl(perfil, sintoma) {
+  const perfilLabel  = PERFILES.find(p => p.id === perfil)?.titulo || "";
+  const sintomaLabel = SINTOMAS[perfil]?.find(s => s.id === sintoma)?.txt || "";
+  const params = new URLSearchParams({ perfil: perfilLabel, problema: sintomaLabel });
+  return GHL_FORM_BASE + "?" + params.toString();
+}
 
 /* ── DATA ────────────────────────────────────────────── */
 const PERFILES = [
@@ -223,7 +230,7 @@ function GHLForm({ onSubmit }) {
 
   return (
     <iframe
-      src={GHL_FORM_URL}
+      src={buildGHLUrl(perfil, sintoma)}
       id={`inline-${GHL_FORM_ID}`}
       data-layout={`{"id":"INLINE"}`}
       data-trigger-type="alwaysShow"
