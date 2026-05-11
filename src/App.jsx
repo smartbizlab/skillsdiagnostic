@@ -184,7 +184,7 @@ function buildGHLUrl(perfil, sintoma) {
 }
 
 /* ── GHL IFRAME FORM COMPONENT ───────────────────────── */
-function GHLForm({ onSubmit }) {
+function GHLForm({ onSubmit, perfilId, sintomaId }) {
   const scriptLoaded = useRef(false);
 
   // Load GHL embed script once
@@ -231,7 +231,7 @@ function GHLForm({ onSubmit }) {
 
   return (
     <iframe
-      src={buildGHLUrl(perfil, sintoma)}
+      src={buildGHLUrl(perfilId, sintomaId)}
       id={`inline-${GHL_FORM_ID}`}
       data-layout={`{"id":"INLINE"}`}
       data-trigger-type="alwaysShow"
@@ -567,7 +567,7 @@ export default function App() {
               overflow:"hidden",
               marginBottom:"16px",
             }}>
-              <GHLForm onSubmit={handleFormSubmit} />
+              <GHLForm onSubmit={handleFormSubmit} perfilId={perfil} sintomaId={sintoma} />
             </div>
 
             {/* Fallback manual button — aparece después de 8s */}
