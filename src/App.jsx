@@ -279,17 +279,12 @@ export default function App() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Show manual fallback button after 8s on step 3
+  // Reset manual state when entering step 3
   useEffect(() => {
     if (paso === 3) {
       paso3Submitted.current = false;
       setShowManual(false);
-      manualTimer.current = setTimeout(() => setShowManual(true), 8000);
-    } else {
-      clearTimeout(manualTimer.current);
-      setShowManual(false);
     }
-    return () => clearTimeout(manualTimer.current);
   }, [paso]);
 
   const go = (n) => {
@@ -301,7 +296,7 @@ export default function App() {
   const pickSintoma = (id) => { setSintoma(id); go(3); };
   const handleFormSubmit = () => {
     paso3Submitted.current = true;
-    go(4);
+    setShowManual(true);
   };
   const reset = () => { setPerfil(null); setSintoma(null); go(0); };
 
@@ -581,10 +576,10 @@ export default function App() {
                 marginBottom:"16px",
               }}>
                 <p style={{ fontSize:"13px", color:C.sub, fontFamily:font, marginBottom:"12px", lineHeight:1.5 }}>
-                  ¿Ya enviaste el formulario?
+                  ✓ Datos enviados correctamente
                 </p>
                 <button
-                  onClick={handleFormSubmit}
+                  onClick={()=>go(4)}
                   onMouseEnter={()=>setHov("manual")}
                   onMouseLeave={()=>setHov(null)}
                   style={{
@@ -723,6 +718,7 @@ export default function App() {
                     cursor:"pointer", textAlign:"left",
                     transition:"background 0.16s ease", width:"100%",
                   }}
+                  onClick={()=>window.open("https://rodolfobuitrago.com/skillspack","_blank")}
                 >
                   Ver Pack completo para mi perfil →
                 </button>
@@ -740,6 +736,7 @@ export default function App() {
                     cursor:"pointer", textAlign:"left",
                     transition:"all 0.16s ease", width:"100%",
                   }}
+                  onClick={()=>window.open("https://rodolfobuitrago.com/skillspack","_blank")}
                 >
                   Obtener solo la primera Skill →
                 </button>
