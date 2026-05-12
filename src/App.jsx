@@ -27,6 +27,11 @@ const PERFILES = [
   { id:"afiliado",     icon:"◇", titulo:"Afiliado de productos digitales",            desc:"Promueves productos de otros y ganas comisiones por ventas" },
   { id:"emprendedor",  icon:"○", titulo:"Emprendedor online construyendo su negocio", desc:"Quieres vender algo online pero aún defines qué y a quién" },
   { id:"inmobiliario", icon:"□", titulo:"Agente inmobiliario independiente",          desc:"Vendes o rentas propiedades de forma independiente" },
+  { id:"creador",      icon:"◉", titulo:"Creador de contenido que quiere monetizar",  desc:"Tienes audiencia y quieres convertirla en ingresos reales" },
+  { id:"rrhh",         icon:"◐", titulo:"Profesional de recursos humanos",            desc:"Gestionas talento, selección, onboarding o capacitación en una empresa" },
+  { id:"independiente",icon:"◑", titulo:"Abogado o contador independiente",           desc:"Ofreces servicios profesionales de forma independiente" },
+  { id:"docente",      icon:"◒", titulo:"Docente o formador corporativo",             desc:"Diseñas y facilitas capacitaciones, talleres o programas de formación" },
+  { id:"pyme",         icon:"◓", titulo:"Gerente de pequeña empresa (PYME)",          desc:"Diriges una pequeña empresa y usualmente operas en múltiples roles" },
 ];
 
 const SINTOMAS = {
@@ -59,6 +64,36 @@ const SINTOMAS = {
     { id:"redes",        txt:"No sé cómo usar redes sociales para atraer clientes sin parecer desesperado" },
     { id:"contacto",     txt:"Cuando escribo para contactar a alguien no sé qué decir para que me respondan" },
     { id:"presentacion", txt:"Cada presentación de propiedad la improviso porque no tengo una estructura fija" },
+  ],
+  creador:[
+    { id:"seguidores", txt:"Tengo seguidores pero no sé cómo convertirlos en ingresos reales" },
+    { id:"sinventas",  txt:"Creo contenido constantemente pero no genera ventas de nada" },
+    { id:"producto",   txt:"No sé qué producto o servicio lanzar con mi audiencia actual" },
+    { id:"gratis",     txt:"Me comparan con creadores gratuitos y no sé cómo justificar que me paguen" },
+  ],
+  rrhh:[
+    { id:"repetitivo", txt:"Paso horas redactando descripciones de cargo, evaluaciones y comunicados repetitivos" },
+    { id:"entrevistas",txt:"Me cuesta hacer entrevistas consistentes y documentar bien los procesos de selección" },
+    { id:"reportes",   txt:"Los reportes de gestión humana me toman demasiado tiempo y no tienen impacto" },
+    { id:"onboarding", txt:"No tengo sistema para onboarding y cada ingreso nuevo es diferente" },
+  ],
+  independiente:[
+    { id:"admin",      txt:"Dedico demasiado tiempo a tareas administrativas que no puedo facturar" },
+    { id:"valor",      txt:"Mis clientes no entienden lo que hago y me cuesta explicar mi valor" },
+    { id:"seguimiento",txt:"No tengo un sistema para dar seguimiento a mis casos o clientes activos" },
+    { id:"propuestas", txt:"Cada propuesta o contrato lo empiezo desde cero y me consume horas" },
+  ],
+  docente:[
+    { id:"materiales", txt:"Diseñar materiales de capacitación nuevos me toma días enteros" },
+    { id:"aplicacion", txt:"Mis participantes no aplican lo que aprenden y no sé cómo mejorarlo" },
+    { id:"evaluacion", txt:"No tengo un sistema para evaluar si mis formaciones realmente funcionan" },
+    { id:"adaptar",    txt:"Me cuesta adaptar el mismo contenido para audiencias distintas" },
+  ],
+  pyme:[
+    { id:"todo",       txt:"Soy el que hace todo y no tengo tiempo para trabajar en el negocio" },
+    { id:"dinero",     txt:"No tengo claridad de qué áreas del negocio me están costando dinero" },
+    { id:"equipo",     txt:"Me cuesta comunicarle a mi equipo las prioridades sin reuniones constantes" },
+    { id:"delegar",    txt:"Cada vez que quiero delegar algo tengo que explicarlo todo desde cero" },
   ],
 };
 
@@ -171,6 +206,116 @@ const SKILLS = {
       {n:"Ficha de propiedad",        r:"Describe cualquier inmueble con estructura persuasiva en minutos."},
       {n:"Presentación de propiedad", r:"Un guión de visita que destaca los puntos correctos según el comprador."},
       {n:"Seguimiento post-visita",   r:"El mensaje correcto después de mostrar la propiedad para mantener el interés."},
+    ],
+  },
+  creador:{
+    seguidores:[
+      {n:"Auditoría de audiencia",          r:"Entiende qué problema real tiene tu audiencia antes de crear cualquier oferta."},
+      {n:"Diseño de oferta mínima validable",r:"Crea algo vendible en días usando lo que ya tienes."},
+      {n:"Contenido de conversión",         r:"Para pasar de contenido de valor a contenido que vende sin perder autenticidad."},
+    ],
+    sinventas:[
+      {n:"Análisis de contenido existente", r:"Identifica qué piezas tienen potencial de conversión y cuáles solo generan likes."},
+      {n:"Bridge content",                  r:"Para insertar llamadas a la acción naturales sin que el contenido se sienta comercial."},
+      {n:"Embudo de contenido",             r:"Estructura una secuencia que lleva al seguidor desde el descubrimiento hasta la compra."},
+    ],
+    producto:[
+      {n:"Validación de idea con audiencia", r:"Pregúntale a tu comunidad qué quiere comprar sin hacer encuestas genéricas."},
+      {n:"Mapeo de activos",                 r:"Identifica qué conocimiento tuyo tiene valor de mercado real."},
+      {n:"Diseño de primer producto digital",r:"Estructura un producto de entrada de bajo riesgo y alta conversión."},
+    ],
+    gratis:[
+      {n:"Posicionamiento del creador",      r:"Diferencia tu propuesta de valor de todo lo que existe gratis."},
+      {n:"Propuesta de valor premium",       r:"Comunica por qué tu versión pagada vale lo que cuesta."},
+      {n:"Manejo de objeciones de precio",   r:"Para responder sin descuentos y sin perder al cliente."},
+    ],
+  },
+  rrhh:{
+    repetitivo:[
+      {n:"Redacción de descripciones de cargo", r:"Produce una JD completa en minutos con el input mínimo."},
+      {n:"Comunicados internos",                r:"Redacta anuncios, políticas y mensajes de RRHH con tono consistente."},
+      {n:"Evaluaciones de desempeño",           r:"Estructura feedback escrito justo, específico y accionable."},
+    ],
+    entrevistas:[
+      {n:"Guías de entrevista por competencias",r:"Preguntas calibradas por cargo y nivel de experiencia."},
+      {n:"Scorecard de candidatos",             r:"Documenta y compara candidatos con criterios objetivos."},
+      {n:"Reportes de selección",               r:"Comunica decisiones de contratación con argumento claro al negocio."},
+    ],
+    reportes:[
+      {n:"Análisis de datos de RRHH",    r:"Convierte datos crudos en insights accionables para la gerencia."},
+      {n:"Reportes ejecutivos de RRHH",  r:"Presenta métricas de talento en lenguaje de negocio, no de RRHH."},
+      {n:"Dashboards narrativos",        r:"Construye el argumento detrás de los números."},
+    ],
+    onboarding:[
+      {n:"Diseño de proceso de onboarding",r:"Construye una secuencia estructurada de primeros 30 días."},
+      {n:"Materiales de bienvenida",       r:"Produce documentos, guías y checklists de ingreso consistentes."},
+      {n:"Seguimiento de nuevos ingresos", r:"Un sistema de check-ins que detecta problemas temprano."},
+    ],
+  },
+  independiente:{
+    admin:[
+      {n:"Gestión de agenda y prioridades",r:"Separa el tiempo facturable del tiempo operativo."},
+      {n:"Comunicación con clientes",      r:"Redacta emails, recordatorios y actualizaciones en minutos."},
+      {n:"Documentación de casos",         r:"Mantén el expediente actualizado sin consumir tiempo de trabajo."},
+    ],
+    valor:[
+      {n:"Traducción técnica al cliente",  r:"Explica conceptos legales o contables sin jerga que el cliente no entiende."},
+      {n:"Propuesta de valor profesional", r:"Comunica qué problema resuelves y qué riesgo eliminas para el cliente."},
+      {n:"Educación del cliente",          r:"Produce contenido que posiciona tu expertise sin que suene a publicidad."},
+    ],
+    seguimiento:[
+      {n:"Gestión de pipeline de casos",   r:"Visualiza el estado de cada cliente y próximo paso sin depender de la memoria."},
+      {n:"Mensajes de seguimiento",        r:"Mantén al cliente informado sin invertir tiempo en cada actualización."},
+      {n:"Reportes de avance",             r:"Comunica progreso en lenguaje que el cliente entiende y valora."},
+    ],
+    propuestas:[
+      {n:"Propuestas de servicios",        r:"Produce una propuesta profesional en minutos con el contexto del cliente."},
+      {n:"Contratos base",                 r:"Una estructura estándar adaptable a cada caso sin empezar desde cero."},
+      {n:"Cartas y comunicados formales",  r:"Redacta documentación profesional con el tono correcto."},
+    ],
+  },
+  docente:{
+    materiales:[
+      {n:"Arquitectura de contenido formativo",r:"Estructura un módulo completo en una fracción del tiempo habitual."},
+      {n:"Materiales de apoyo",                r:"Produce presentaciones, guías y ejercicios coherentes con el objetivo."},
+      {n:"Actividades de aprendizaje",         r:"Diseña dinámicas y casos prácticos calibrados al nivel del grupo."},
+    ],
+    aplicacion:[
+      {n:"Diseño de transferencia",        r:"Construye planes de aplicación práctica que van más allá del taller."},
+      {n:"Seguimiento post-formación",     r:"Check-ins que refuerzan el aprendizaje después de la sesión."},
+      {n:"Ajuste de contenido por feedback",r:"Itera el material basado en lo que no funcionó."},
+    ],
+    evaluacion:[
+      {n:"Diseño de evaluaciones",         r:"Mide aprendizaje real, no solo satisfacción del participante."},
+      {n:"Reportes de impacto formativo",  r:"Demuestra el ROI de la capacitación al cliente o empresa."},
+      {n:"Análisis de resultados",         r:"Identifica qué cambiar en la siguiente iteración con datos concretos."},
+    ],
+    adaptar:[
+      {n:"Perfilado de audiencia formativa",r:"Diagnostica el nivel, contexto y necesidades del grupo antes de diseñar."},
+      {n:"Adaptación de contenido",         r:"Toma un módulo existente y calibralo a un nuevo perfil en poco tiempo."},
+      {n:"Comunicación pre-formación",      r:"Gestiona expectativas y prepara al grupo antes de la sesión."},
+    ],
+  },
+  pyme:{
+    todo:[
+      {n:"Diagnóstico de delegación",      r:"Identifica qué tareas estás haciendo tú que no deberías."},
+      {n:"Instrucciones para delegar",     r:"Documenta procesos de forma que otro los pueda ejecutar sin preguntarte."},
+      {n:"Priorización semanal",           r:"Enfócate en las tareas de alto impacto y suelta las operativas."},
+    ],
+    dinero:[
+      {n:"Diagnóstico financiero básico",  r:"Lee tus números y detecta dónde se pierde dinero sin ser contador."},
+      {n:"Análisis de rentabilidad por área",r:"Sabe qué parte del negocio vale la pena y cuál no."},
+      {n:"Reportes para tomar decisiones", r:"Convierte datos financieros en decisiones concretas de operación."},
+    ],
+    equipo:[
+      {n:"Comunicación de prioridades",    r:"Transmite foco y dirección por escrito sin ambigüedad."},
+      {n:"Actualizaciones de equipo",      r:"Produce briefings semanales que reemplazan reuniones innecesarias."},
+      {n:"Feedback al equipo",             r:"Da retroalimentación clara y directa que genera cambio real."},
+    ],
+    delegar:[
+      {n:"Documentación de procesos",      r:"Crea SOPs simples que cualquier persona puede seguir."},
+      {n:"Onboarding de colaboradores",    r:"Un nuevo miembro entiende su rol y tareas sin depender de ti."},
+      {n:"Instrucciones operativas",       r:"Comunica exactamente qué hacer, cómo y con qué criterio de calidad."},
     ],
   },
 };
