@@ -279,12 +279,52 @@ export default function App() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Reset manual state when entering step 3
+  // Detect GHL form submission via postMessage
   useEffect(() => {
-    if (paso === 3) {
-      paso3Submitted.current = false;
-      setShowManual(false);
-    }
+    if (paso !== 3) return;
+    paso3Submitted.current = false;
+    setShowManual(false);
+
+    const handler = (e) => {
+      try {
+        const raw = typeof e.data === "string" ? e.data : JSON.stringify(e.data);
+        // GHL emits various signals on submit — catch all of them
+        const signals = [
+          "form_submitted", "formSubmitted", "submitted",
+          "thankyou", "thank_you", "success", "gtm.formSubmit"
+        ];
+        const hit = signals.some(s => raw.toLowerCase().includes(s.toLowerCase()));
+        if (hit && !paso3Submitted.current) {
+          paso3Submitted.current = true;
+          setShowManual(true);
+        }
+      } catch {}
+    };
+
+    // Also observe iframe resize — GHL changes height after submit
+    const iframe = document.querySelector('iframe[data-form-id]');
+    let prevHeight = 0;
+    let resizeCount = 0;
+    const resizeObserver = iframe ? new ResizeObserver(() => {
+      const h = iframe.offsetHeight;
+      if (prevHeight > 0 && Math.abs(h - prevHeight) > 30) {
+        resizeCount++;
+        // Two resize events after load = likely a submit + confirmation render
+        if (resizeCount >= 2 && !paso3Submitted.current) {
+          paso3Submitted.current = true;
+          setShowManual(true);
+        }
+      }
+      prevHeight = h;
+    }) : null;
+
+    window.addEventListener("message", handler);
+    if (resizeObserver && iframe) resizeObserver.observe(iframe);
+
+    return () => {
+      window.removeEventListener("message", handler);
+      if (resizeObserver) resizeObserver.disconnect();
+    };
   }, [paso]);
 
   const go = (n) => {
