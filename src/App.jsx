@@ -518,7 +518,7 @@ export default function App() {
       {/* CARD */}
       <div style={{
         width:"100%",
-        maxWidth: isMobile ? "100%" : "680px",
+        maxWidth: isMobile ? "100%" : (paso === 0 ? "860px" : "680px"),
         background: isMobile ? C.bg : C.surface,
         border: isMobile ? "none" : `1px solid ${C.border}`,
         borderRadius: isMobile ? 0 : "12px",
@@ -552,57 +552,210 @@ export default function App() {
           </div>
         )}
 
-        {/* ══ INTRO ══ */}
+        {/* ══ LANDING PAGE — PASO 0 ══ */}
         {paso === 0 && (
           <div>
+
+            {/* ── HERO ── */}
             <div style={{
-              display:"inline-flex", alignItems:"center", gap:"8px",
-              background:"rgba(43,212,184,0.08)", border:"1px solid rgba(43,212,184,0.2)",
-              borderRadius:"100px", padding:"6px 16px",
-              marginBottom: isMobile?"24px":"32px",
+              textAlign: isMobile ? "left" : "center",
+              paddingBottom: isMobile ? "40px" : "60px",
+              borderBottom: `1px solid ${C.border}`,
+              marginBottom: isMobile ? "40px" : "56px",
             }}>
-              <span style={{ width:7, height:7, borderRadius:"50%", background:C.teal, display:"inline-block", flexShrink:0 }}/>
-              <span style={{ fontSize: isMobile?"12px":"13px", color:C.teal, fontFamily:font, fontWeight:500 }}>
-                2 preguntas · resultado inmediato
-              </span>
+              {/* Badge */}
+              <div style={{
+                display:"inline-flex", alignItems:"center", gap:"8px",
+                background:"rgba(43,212,184,0.08)", border:"1px solid rgba(43,212,184,0.2)",
+                borderRadius:"100px", padding:"6px 18px",
+                marginBottom: isMobile?"20px":"28px",
+              }}>
+                <span style={{ width:7, height:7, borderRadius:"50%", background:C.teal, display:"inline-block", flexShrink:0, animation:"pulse 2s ease-in-out infinite" }}/>
+                <span style={{ fontSize:"12px", color:C.teal, fontFamily:font, fontWeight:600, letterSpacing:"0.04em" }}>
+                  Sistema de diagnóstico · Smart Business
+                </span>
+              </div>
+
+              {/* H1 */}
+              <h1 style={{
+                fontSize: isMobile?"30px":"52px",
+                fontFamily:font, fontWeight:800, lineHeight:1.1,
+                marginBottom: isMobile?"18px":"24px",
+                color:"#f8fafc", letterSpacing:"-0.03em",
+                maxWidth:"780px",
+                marginLeft:"auto", marginRight:"auto",
+              }}>
+                Descubre las 3 Skills que necesitas{" "}
+                <span style={{
+                  background:"linear-gradient(135deg, #2bd4b8, #a78bfa)",
+                  WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
+                  backgroundClip:"text",
+                }}>
+                  ahora mismo en Claude
+                </span>
+              </h1>
+
+              {/* Subtitle */}
+              <p style={{
+                fontSize: isMobile?"16px":"20px",
+                lineHeight:1.7, color:C.sub, fontFamily:font,
+                maxWidth:"580px",
+                marginLeft:"auto", marginRight:"auto",
+                marginBottom: isMobile?"28px":"36px",
+              }}>
+                Identifica tu perfil, tu cuello de botella y la ruta exacta de Skills que debes construir primero — en el orden correcto.
+              </p>
+
+              {/* Stats row */}
+              <div style={{
+                display:"flex", gap: isMobile?"16px":"32px",
+                justifyContent: isMobile?"flex-start":"center",
+                flexWrap:"wrap",
+                marginBottom: isMobile?"32px":"44px",
+              }}>
+                {[
+                  { num:"10", label:"Perfiles profesionales" },
+                  { num:"2",  label:"Preguntas para tu diagnóstico" },
+                  { num:"3",  label:"Skills recomendadas en orden" },
+                ].map((s,i)=>(
+                  <div key={i} style={{ textAlign:"center" }}>
+                    <div style={{
+                      fontSize: isMobile?"26px":"34px", fontWeight:800,
+                      fontFamily:font, letterSpacing:"-0.03em",
+                      color: i===0 ? C.teal : i===1 ? C.violet : C.amber,
+                      lineHeight:1,
+                    }}>{s.num}</div>
+                    <div style={{ fontSize:"12px", color:C.muted, fontFamily:font, marginTop:"4px" }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <h1 style={{
-              fontSize: isMobile?"28px":"42px",
-              fontFamily:font, fontWeight:800, lineHeight:1.15,
-              marginBottom: isMobile?"16px":"20px",
-              color:"#f8fafc", letterSpacing:"-0.02em",
-            }}>
-              Descubre las 3 Skills de Claude que necesitas ahora mismo
-            </h1>
+            {/* ── PERFILES ── */}
+            <div style={{ marginBottom: isMobile?"40px":"56px" }}>
+              <div style={{
+                fontSize:"11px", color:C.violet, letterSpacing:"0.16em",
+                fontFamily:font, fontWeight:700, textTransform:"uppercase",
+                marginBottom:"12px",
+                textAlign: isMobile?"left":"center",
+              }}>
+                ¿Para quién es esto?
+              </div>
+              <h2 style={{
+                fontSize: isMobile?"22px":"32px",
+                fontFamily:font, fontWeight:800, color:"#f8fafc",
+                lineHeight:1.2, letterSpacing:"-0.02em",
+                marginBottom: isMobile?"8px":"12px",
+                textAlign: isMobile?"left":"center",
+              }}>
+                Elige el perfil más cercano a lo que haces hoy
+              </h2>
+              <p style={{
+                fontSize: isMobile?"14px":"16px", color:C.sub,
+                fontFamily:font, lineHeight:1.6,
+                marginBottom: isMobile?"24px":"36px",
+                textAlign: isMobile?"left":"center",
+                maxWidth:"480px",
+                marginLeft:"auto", marginRight:"auto",
+              }}>
+                Cada perfil tiene sus propias Skills prioritarias. Elige el tuyo para ver cuáles necesitas primero.
+              </p>
 
-            <p style={{
-              fontSize: isMobile?"16px":"18px",
-              lineHeight:1.7, color:C.sub, fontFamily:font,
-              marginBottom: isMobile?"32px":"40px", maxWidth:"520px",
-            }}>
-              Identifica tu perfil, tu cuello de botella y la ruta exacta de Skills que debes construir primero — en el orden correcto.
-            </p>
+              {/* Grid de perfiles — 2 cols desktop, 1 col mobile */}
+              <div style={{
+                display:"grid",
+                gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+                gap:"10px",
+              }}>
+                {PERFILES.map((p, i)=>{
+                  const accentColor = i % 3 === 0 ? C.teal : i % 3 === 1 ? C.violet : C.amber;
+                  const accentRgb   = i % 3 === 0 ? "43,212,184" : i % 3 === 1 ? "167,139,250" : "245,158,11";
+                  return (
+                    <div
+                      key={p.id}
+                      style={{
+                        background: C.surface,
+                        border:`1.5px solid ${C.border}`,
+                        borderRadius:"12px",
+                        padding:"16px 18px",
+                        display:"flex", gap:"14px", alignItems:"flex-start",
+                        position:"relative", overflow:"hidden",
+                      }}
+                    >
+                      {/* Accent bar */}
+                      <div style={{
+                        position:"absolute", top:0, left:0,
+                        width:"3px", height:"100%",
+                        background: accentColor, borderRadius:"12px 0 0 12px",
+                      }}/>
+                      {/* Icon */}
+                      <div style={{
+                        width:38, height:38, borderRadius:"10px", flexShrink:0,
+                        background:`rgba(${accentRgb},0.1)`,
+                        border:`1px solid rgba(${accentRgb},0.25)`,
+                        display:"flex", alignItems:"center", justifyContent:"center",
+                        fontSize:"17px", color: accentColor,
+                      }}>{p.icon}</div>
+                      {/* Text */}
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <div style={{
+                          fontSize: isMobile?"14px":"15px", fontWeight:700,
+                          color:"#f8fafc", fontFamily:font, marginBottom:"4px",
+                          lineHeight:1.3,
+                        }}>{p.titulo}</div>
+                        <div style={{
+                          fontSize: isMobile?"12px":"13px", color:C.sub,
+                          fontFamily:font, lineHeight:1.5,
+                        }}>{p.desc}</div>
+                      </div>
+                      {/* Number */}
+                      <div style={{
+                        fontSize:"11px", color:`rgba(${accentRgb},0.4)`,
+                        fontFamily:font, fontWeight:700, flexShrink:0,
+                        alignSelf:"flex-start", marginTop:"2px",
+                      }}>0{i+1}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-            <button
-              onClick={()=>go(1)}
-              onMouseEnter={()=>setHov("start")}
-              onMouseLeave={()=>setHov(null)}
-              style={{
-                background: hov==="start" ? "#d97706" : C.amber,
-                color:"#080b14", border:"none", borderRadius:"10px",
-                padding: isMobile?"16px 28px":"18px 36px",
-                fontSize: isMobile?"15px":"16px",
-                fontFamily:font, fontWeight:700, cursor:"pointer",
-                transition:"background 0.18s ease",
-                width: isMobile?"100%":"auto",
-              }}
-            >
-              Comenzar diagnóstico →
-            </button>
-            <p style={{ marginTop:"12px", fontSize:"13px", color:C.muted, fontFamily:font }}>
-              Sin registro previo · Resultado en 2 pasos
-            </p>
+            {/* ── CTA FINAL ── */}
+            <div style={{
+              textAlign: isMobile ? "left" : "center",
+              paddingTop: isMobile?"0":"8px",
+            }}>
+              <p style={{
+                fontSize: isMobile?"14px":"16px", color:C.sub,
+                fontFamily:font, marginBottom:"20px", lineHeight:1.6,
+                maxWidth:"420px",
+                marginLeft:"auto", marginRight:"auto",
+              }}>
+                El diagnóstico toma menos de 2 minutos. Sin registro previo.
+              </p>
+              <button
+                onClick={()=>go(1)}
+                onMouseEnter={()=>setHov("start")}
+                onMouseLeave={()=>setHov(null)}
+                style={{
+                  background: hov==="start" ? "#d97706" : C.amber,
+                  color:"#080b14", border:"none", borderRadius:"12px",
+                  padding: isMobile?"18px 28px":"20px 48px",
+                  fontSize: isMobile?"16px":"18px",
+                  fontFamily:font, fontWeight:800, cursor:"pointer",
+                  transition:"all 0.18s ease",
+                  width: isMobile?"100%":"auto",
+                  boxShadow: hov==="start" ? "0 8px 32px rgba(245,158,11,0.35)" : "0 4px 20px rgba(245,158,11,0.2)",
+                  letterSpacing:"-0.01em",
+                }}
+              >
+                Comenzar diagnóstico →
+              </button>
+              <p style={{ marginTop:"14px", fontSize:"12px", color:C.muted, fontFamily:font }}>
+                Sin registro · Sin formularios previos · Resultado inmediato
+              </p>
+            </div>
+
           </div>
         )}
 
@@ -960,6 +1113,7 @@ export default function App() {
         button { -webkit-tap-highlight-color:transparent; }
         button:focus-visible { outline:2px solid rgba(43,212,184,0.5); outline-offset:2px; }
         @media (max-width:639px) { body { overflow-x:hidden; } }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
       `}</style>
     </div>
   );
