@@ -539,13 +539,13 @@ export default function App() {
           Skills Diagnóstico · Smart Business
         </div>
 
-        {/* PROGRESS — pasos 1-4 */}
-        {paso > 0 && (
+        {/* PROGRESS — pasos 2-4 (sintoma, form, resultado) */}
+        {paso > 1 && (
           <div style={{ display:"flex", gap:"6px", marginBottom: isMobile?"28px":"36px" }}>
-            {[1,2,3,4].map((_,i)=>(
+            {[2,3,4].map((n,i)=>(
               <div key={i} style={{
                 height:"3px", flex:1, borderRadius:"2px",
-                background: paso > i+1 ? C.violet : paso === i+1 ? C.teal : "rgba(43,212,184,0.1)",
+                background: paso > n ? C.violet : paso === n ? C.teal : "rgba(43,212,184,0.1)",
                 transition:"background 0.4s ease",
               }}/>
             ))}
@@ -662,7 +662,7 @@ export default function App() {
               </p>
 
               {/* Grid de perfiles — 2 cols desktop, 1 col mobile */}
-              <div style={{
+              <div id="perfiles-grid" style={{
                 display:"grid",
                 gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
                 gap:"10px",
@@ -670,16 +670,22 @@ export default function App() {
                 {PERFILES.map((p, i)=>{
                   const accentColor = i % 3 === 0 ? C.teal : i % 3 === 1 ? C.violet : C.amber;
                   const accentRgb   = i % 3 === 0 ? "43,212,184" : i % 3 === 1 ? "167,139,250" : "245,158,11";
+                  const isHov       = hov === p.id;
                   return (
-                    <div
+                    <button
                       key={p.id}
+                      onClick={()=>pickPerfil(p.id)}
+                      onMouseEnter={()=>setHov(p.id)}
+                      onMouseLeave={()=>setHov(null)}
                       style={{
-                        background: C.surface,
-                        border:`1.5px solid ${C.border}`,
+                        background: isHov ? `rgba(${accentRgb},0.06)` : C.surface,
+                        border:`1.5px solid ${isHov ? accentColor : C.border}`,
                         borderRadius:"12px",
                         padding:"16px 18px",
                         display:"flex", gap:"14px", alignItems:"flex-start",
                         position:"relative", overflow:"hidden",
+                        cursor:"pointer", textAlign:"left",
+                        transition:"all 0.16s ease",
                       }}
                     >
                       {/* Accent bar */}
@@ -691,30 +697,32 @@ export default function App() {
                       {/* Icon */}
                       <div style={{
                         width:38, height:38, borderRadius:"10px", flexShrink:0,
-                        background:`rgba(${accentRgb},0.1)`,
+                        background:`rgba(${accentRgb},${isHov?"0.15":"0.1"})`,
                         border:`1px solid rgba(${accentRgb},0.25)`,
                         display:"flex", alignItems:"center", justifyContent:"center",
                         fontSize:"17px", color: accentColor,
+                        transition:"background 0.16s ease",
                       }}>{p.icon}</div>
                       {/* Text */}
                       <div style={{ flex:1, minWidth:0 }}>
                         <div style={{
                           fontSize: isMobile?"14px":"15px", fontWeight:700,
-                          color:"#f8fafc", fontFamily:font, marginBottom:"4px",
-                          lineHeight:1.3,
+                          color: isHov ? "#f8fafc" : C.text,
+                          fontFamily:font, marginBottom:"4px",
+                          lineHeight:1.3, transition:"color 0.16s ease",
                         }}>{p.titulo}</div>
                         <div style={{
                           fontSize: isMobile?"12px":"13px", color:C.sub,
                           fontFamily:font, lineHeight:1.5,
                         }}>{p.desc}</div>
                       </div>
-                      {/* Number */}
-                      <div style={{
-                        fontSize:"11px", color:`rgba(${accentRgb},0.4)`,
-                        fontFamily:font, fontWeight:700, flexShrink:0,
-                        alignSelf:"flex-start", marginTop:"2px",
-                      }}>0{i+1}</div>
-                    </div>
+                      {/* Arrow on hover */}
+                      <span style={{
+                        fontSize:"16px", color: isHov ? accentColor : "transparent",
+                        flexShrink:0, alignSelf:"center",
+                        transition:"color 0.16s ease",
+                      }}>→</span>
+                    </button>
                   );
                 })}
               </div>
@@ -734,7 +742,7 @@ export default function App() {
                 El diagnóstico toma menos de 2 minutos. Sin registro previo.
               </p>
               <button
-                onClick={()=>go(1)}
+                onClick={()=>{ document.getElementById("perfiles-grid")?.scrollIntoView({ behavior:"smooth", block:"start" }); }}
                 onMouseEnter={()=>setHov("start")}
                 onMouseLeave={()=>setHov(null)}
                 style={{
@@ -759,61 +767,13 @@ export default function App() {
           </div>
         )}
 
-        {/* ══ PERFIL ══ */}
-        {paso === 1 && (
-          <div>
-            <div style={{ fontSize:"12px", color:C.teal, letterSpacing:"0.14em", fontFamily:font, fontWeight:700, marginBottom:"10px", textTransform:"uppercase" }}>
-              Paso 1 de 2 — Tu perfil
-            </div>
-            <h2 style={{ fontSize: isMobile?"22px":"30px", fontFamily:font, fontWeight:800, color:"#f8fafc", lineHeight:1.2, marginBottom:"8px", letterSpacing:"-0.02em" }}>
-              ¿Cuál describe mejor tu situación?
-            </h2>
-            <p style={{ fontSize: isMobile?"14px":"16px", color:C.sub, marginBottom: isMobile?"20px":"28px", fontFamily:font }}>
-              Elige el perfil más cercano a lo que haces hoy
-            </p>
-
-            <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
-              {PERFILES.map(p=>(
-                <button
-                  key={p.id}
-                  onClick={()=>pickPerfil(p.id)}
-                  onMouseEnter={()=>setHov(p.id)}
-                  onMouseLeave={()=>setHov(null)}
-                  style={{
-                    background: hov===p.id ? "rgba(43,212,184,0.06)" : "rgba(15,22,41,0.8)",
-                    border:`1.5px solid ${hov===p.id ? C.teal : C.border}`,
-                    borderRadius:"10px",
-                    padding: isMobile?"14px 16px":"16px 20px",
-                    textAlign:"left", cursor:"pointer",
-                    transition:"all 0.16s ease",
-                    display:"flex", alignItems:"center", gap:"14px",
-                  }}
-                >
-                  <span style={{
-                    width:36, height:36, borderRadius:"8px", flexShrink:0,
-                    background: hov===p.id ? "rgba(43,212,184,0.12)" : C.border,
-                    display:"flex", alignItems:"center", justifyContent:"center",
-                    fontSize:"16px", color: hov===p.id ? C.teal : C.sub,
-                    transition:"all 0.16s ease",
-                  }}>{p.icon}</span>
-                  <div style={{ flex:1, minWidth:0 }}>
-                    <div style={{ fontSize: isMobile?"15px":"16px", fontWeight:700, color: hov===p.id?"#f8fafc":C.text, fontFamily:font, marginBottom:"3px", transition:"color 0.16s ease" }}>
-                      {p.titulo}
-                    </div>
-                    <div style={{ fontSize: isMobile?"13px":"14px", color:C.muted, fontFamily:font, lineHeight:1.5 }}>{p.desc}</div>
-                  </div>
-                  <span style={{ fontSize:"18px", flexShrink:0, color: hov===p.id?C.teal:"transparent", transition:"color 0.16s ease" }}>→</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Paso 1 eliminado — perfil se elige desde la landing */}
 
         {/* ══ SÍNTOMA ══ */}
         {paso === 2 && (
           <div>
             <div style={{ fontSize:"12px", color:C.violet, letterSpacing:"0.14em", fontFamily:font, fontWeight:700, marginBottom:"10px", textTransform:"uppercase" }}>
-              Paso 2 de 2 — Tu problema
+              Paso 1 de 2 — Tu problema
             </div>
             <h2 style={{ fontSize: isMobile?"22px":"30px", fontFamily:font, fontWeight:800, color:"#f8fafc", lineHeight:1.2, marginBottom:"8px", letterSpacing:"-0.02em" }}>
               ¿Qué te está costando más?
@@ -859,7 +819,7 @@ export default function App() {
             </div>
 
             <button
-              onClick={()=>go(1)}
+              onClick={()=>{ setPerfil(null); go(0); }}
               style={{ marginTop:"20px", background:"transparent", border:"none", color:C.muted, fontSize:"14px", cursor:"pointer", fontFamily:font, fontWeight:500, padding:"6px 0" }}
             >
               ← Cambiar perfil
